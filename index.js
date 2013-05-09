@@ -4,8 +4,8 @@
  */
 
 var events = require('events')
-  , Emitter = require('emitter');
-
+  , Emitter = require('emitter')
+  , ua = require('user-agent-parser')();
 /**
  * Expose `Swipe`.
  */
@@ -22,6 +22,7 @@ module.exports = Swipe;
 function Swipe(el) {
   if (!(this instanceof Swipe)) return new Swipe(el);
   if (!el) throw new TypeError('Swipe() requires an element');
+  this.unsupported = 'IE' == ua.browser.name && ua.browser.major < 10;
   this.el = el;
   this.child = el.children[0];
   this.current = 0;
@@ -337,8 +338,12 @@ Swipe.prototype.transitionDuration = function(ms){
 Swipe.prototype.translate = function(x){
   var s = this.child.style;
   x = -x;
-  s.webkitTransform = s.MozTransform = 'translate3d(' + x + 'px, 0, 0)';
-  s.msTransform = s.OTransform = 'translateX(' + x + 'px)';
-  //s.left = x + 'px';
+  if(this.unsupported){
+    s.left = x + 'px';
+  }
+  else{
+    s.webkitTransform = s.MozTransform = 'translate3d(' + x + 'px, 0, 0)';
+    s.msTransform = s.OTransform = 'translateX(' + x + 'px)';
+  }
 };
 

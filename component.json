@@ -6,7 +6,8 @@
   "keywords": ["carousel", "slide", "slides", "swipe", "touch", "ui"],
   "dependencies": {
     "component/emitter": "*",
-    "component/events": "*"
+    "component/events": "*",
+    "component/user-agent-parser": "*"
   },
   "development": {},
   "license": "MIT",
