@@ -24,7 +24,9 @@ function Swipe(el) {
   if (!el) throw new TypeError('Swipe() requires an element');
   this.el = el;
   this.child = el.children[0];
+  this.current = 0;
   this.refresh();
+
   this.interval(5000);
   this.duration(300);
   this.show(0, 0, { silent: true });
@@ -45,10 +47,13 @@ Emitter(Swipe.prototype);
 
 Swipe.prototype.refresh = function(){
   this.total = this.child.children.length;
-  this.childWidth = this.el.getBoundingClientRect().width;
+  var r = this.el.getBoundingClientRect();
+
+  this.childWidth = r.right - r.left;
   this.width = this.childWidth * this.total | 0;
+
   this.child.style.width = this.width + 'px';
-  this.child.style.height = this.height + 'px';
+  this.child.style.height = (r.bottom - r.top) + 'px';
   this.show(this.current, 0);
 };
 
@@ -221,7 +226,6 @@ Swipe.prototype.play = function(){
 
 Swipe.prototype.stop = function(){
   clearInterval(this.timer);
-  this.timer = null;
   return this;
 };
 
@@ -333,7 +337,8 @@ Swipe.prototype.transitionDuration = function(ms){
 Swipe.prototype.translate = function(x){
   var s = this.child.style;
   x = -x;
-  s.webkitTransform = s.MozTransform = 'translate3d(' + x + 'px, 0, 0)';
-  s.msTransform = s.OTransform = 'translateX(' + x + 'px)';
+  //s.webkitTransform = s.MozTransform = 'translate3d(' + x + 'px, 0, 0)';
+  //s.msTransform = s.OTransform = 'translateX(' + x + 'px)';
+  s.left = x + 'px';
 };
 
