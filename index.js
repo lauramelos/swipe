@@ -337,8 +337,8 @@ Swipe.prototype.transitionDuration = function(ms){
 Swipe.prototype.translate = function(x){
   var s = this.child.style;
   x = -x;
-  //s.webkitTransform = s.MozTransform = 'translate3d(' + x + 'px, 0, 0)';
-  //s.msTransform = s.OTransform = 'translateX(' + x + 'px)';
-  s.left = x + 'px';
+  s.webkitTransform = s.MozTransform = 'translate3d(' + x + 'px, 0, 0)';
+  s.msTransform = s.OTransform = 'translateX(' + x + 'px)';
+  //s.left = x + 'px';
 };
 
